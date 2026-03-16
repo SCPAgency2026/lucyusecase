@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucy: From Digital Birth to Operational Deployment | Case Study</title>
+    <title>Lucy's Digital Birth + Operational Deployment | Case Study</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
@@ -309,6 +309,7 @@
             color: var(--teal);
         }
 
+
         .brand-logo-preview {
             width: 100%;
             max-width: 280px;
@@ -320,17 +321,54 @@
             display: block;
         }
 
-        .brand-badge {
+        .evolution-section {
+            background: linear-gradient(180deg, var(--navy) 0%, var(--dark-slate) 100%);
+        }
+
+        .evolution-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .evolution-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(56, 194, 214, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .evolution-label {
             display: inline-block;
-            padding: 0.35rem 0.75rem;
-            border: 1px solid rgba(56, 194, 214, 0.3);
+            margin-bottom: 1rem;
+            padding: 0.4rem 0.75rem;
+            border: 1px solid rgba(56, 194, 214, 0.25);
             border-radius: 999px;
             font-family: 'Space Mono', monospace;
             font-size: 0.72rem;
-            letter-spacing: 0.08em;
             text-transform: uppercase;
+            letter-spacing: 0.08em;
             color: var(--teal);
-            margin-bottom: 1rem;
+        }
+
+        .timeline-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .timeline-list li {
+            position: relative;
+            padding-left: 1rem;
+            margin: 0.7rem 0;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .timeline-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--orange);
         }
 
         /* Color Palette Display */
@@ -703,29 +741,29 @@
     <nav>
         <div class="logo">Lucy<span>.</span></div>
         <ul class="nav-links">
-            <li><a href="#structure">Systems</a></li>
-            <li><a href="#assets">Brands</a></li>
-            <li><a href="#output">Outputs</a></li>
-            <li><a href="#work">Deploy</a></li>
+            <li><a href="#structure">File Structure</a></li>
+            <li><a href="#assets">Brand Assets</a></li>
+            <li><a href="#output">Output</a></li>
+            <li><a href="#work">Client Work</a></li>
         </ul>
     </nav>
 
     <section class="hero">
-        <div class="hero-badge">Case Study V3 — March 2026</div>
-        <h1>LUCY:<br>OPERATIONAL DEPLOYMENT</h1>
-        <p class="hero-subtitle">What started as an AI employee setup is now an execution system: organized assets, documented workflows, reusable skills, GitHub commits, Google Drive architecture, and live Vercel deployment.</p>
+        <div class="hero-badge">Case Study — March 5, 2026</div>
+        <h1>LUCY'S<br>DIGITAL BIRTH</h1>
+        <p class="hero-subtitle">From zero to fully operational AI Employee in one day. The complete transformation of SCP Agency & Social Grenade's newest team member.</p>
         <div class="hero-stats">
             <div class="stat">
                 <div class="stat-number">2</div>
-                <div class="stat-label">Brands Supported</div>
+                <div class="stat-label">Companies</div>
             </div>
             <div class="stat">
-                <div class="stat-number">20+</div>
-                <div class="stat-label">Core Assets</div>
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Files Created</div>
             </div>
             <div class="stat">
-                <div class="stat-number">Live</div>
-                <div class="stat-label">Deploy Pipeline</div>
+                <div class="stat-number">10</div>
+                <div class="stat-label">Posts Written</div>
             </div>
         </div>
         <div class="scroll-indicator"></div>
@@ -739,7 +777,7 @@
             </div>
             
             <p style="margin-bottom: 2rem; color: rgba(255,255,255,0.8);">
-                The system now spans structured workspace architecture, brand-separated file handling, reusable documentation, and deployment-ready project organization.
+                Complete workspace organization with clean separation between SCP Agency and Social Grenade business units.
             </p>
 
             <div class="file-tree">
@@ -776,63 +814,66 @@
     <section id="assets" class="brand-assets">
         <div class="container">
             <div class="section-header">
-                <div class="section-tag">Brand Systems</div>
-                <h2 class="section-title">MULTI-BRAND ASSETS & IDENTITY</h2>
+                <div class="section-tag">Creative Assets</div>
+                <h2 class="section-title">BRAND GUIDES & LOGOS</h2>
             </div>
 
             <div class="assets-grid">
                 <div class="asset-card">
-                    <div class="brand-badge">Brand 01</div>
-                    <div class="asset-title">SCP AGENCY SYSTEM</div>
-                    <div class="asset-meta">Voice, colors, fonts, positioning</div>
+                    <div class="asset-icon">🎨</div>
+                    <div class="asset-title">SCP AGENCY BRAND</div>
+                    <div class="asset-meta">"Automotive Marketing ROCK STARS"</div>
                     <div class="color-palette">
                         <div class="color-swatch" style="background: #F36C3C; color: white;">#F36C3C</div>
                         <div class="color-swatch" style="background: #39C1D5; color: #1A3159;">#39C1D5</div>
                         <div class="color-swatch" style="background: #1A3159; color: white;">#1A3159</div>
                     </div>
                     <ul class="asset-list">
-                        <li>Rockstar-style brand voice documented</li>
-                        <li>Color system captured for future builds</li>
-                        <li>Typography choices organized</li>
-                        <li>Website and content work aligned to brand</li>
+                        <li>Gobold Regular (display)</li>
+                        <li>Rockwell Bold (subheads)</li>
+                        <li>Playful, energetic voice</li>
+                        <li>Full brand guide created</li>
                     </ul>
                 </div>
 
                 <div class="asset-card">
-                    <div class="brand-badge">Brand 02</div>
-                    <div class="asset-title">SOCIAL GRENADE SYSTEM</div>
-                    <div class="asset-meta">Brand guide + logo library + content rules</div>
-                    <img class="brand-logo-preview" src="assets/social-grenade/logo-navy.png" alt="Social Grenade logo navy">
+                    <div class="asset-icon">💣</div>
+                    <div class="asset-title">SOCIAL GRENADE BRAND</div>
+                    <div class="asset-meta">Social Selling Platform</div>
+                    <div class="color-palette">
+                        <div class="color-swatch" style="background: #183159; color: white;">#183159</div>
+                        <div class="color-swatch" style="background: #38c2d6; color: #183159;">#38c2d6</div>
+                        <div class="color-swatch" style="background: #23223d; color: white;">#23223d</div>
+                    </div>
                     <ul class="asset-list">
-                        <li>4 logo variations organized and stored</li>
-                        <li>Brand guide and content rules documented</li>
-                        <li>Asset library uploaded to Google Drive</li>
-                        <li>Public share link generated for team access</li>
+                        <li>Social Gothic Stencil</li>
+                        <li>Lato + Alkaline fonts</li>
+                        <li>4 logo variations saved</li>
+                        <li>Military-inspired precision</li>
                     </ul>
                 </div>
 
                 <div class="asset-card">
-                    <div class="brand-badge">Visual Assets</div>
-                    <div class="asset-title">LOGO VARIATIONS</div>
-                    <div class="asset-meta">Deployment-ready brand asset handling</div>
-                    <img class="brand-logo-preview" src="assets/social-grenade/logo-teal.png" alt="Social Grenade logo teal">
+                    <div class="asset-icon">🖼️</div>
+                    <div class="asset-title">LOGO ASSETS SAVED</div>
+                    <div class="asset-meta">Social Grenade Visual Identity</div>
                     <ul class="asset-list">
-                        <li>Primary, accent, camo, and transparent files</li>
-                        <li>Stored locally and mirrored to Drive</li>
-                        <li>Ready for web, docs, and internal use</li>
-                        <li>Handled as reusable production assets</li>
+                        <li>logo-navy.png (primary)</li>
+                        <li>logo-teal.png (accent)</li>
+                        <li>logo-camo.png (special)</li>
+                        <li>logo-transparent.png</li>
                     </ul>
                 </div>
 
                 <div class="asset-card">
-                    <div class="brand-badge">Ops Backbone</div>
-                    <div class="asset-title">DOCUMENTED SYSTEMS</div>
-                    <div class="asset-meta">Not just files — usable infrastructure</div>
+                    <div class="asset-icon">📋</div>
+                    <div class="asset-title">DOCUMENTATION</div>
+                    <div class="asset-meta">Complete System Setup</div>
                     <ul class="asset-list">
-                        <li>Persona, user, memory, and workflow files</li>
-                        <li>Brand-separated folder logic enforced</li>
-                        <li>Google Drive structure built correctly with IDs</li>
-                        <li>Reusable templates and skills packaged</li>
+                        <li>SOUL.md — Persona identity</li>
+                        <li>USER.md — Team & context</li>
+                        <li>MEMORY.md — Permanent storage</li>
+                        <li>AGENTS.md — Operating rules</li>
                     </ul>
                 </div>
             </div>
@@ -843,91 +884,102 @@
         <div class="container">
             <div class="section-header">
                 <div class="section-tag">Actual Output</div>
-                <h2 class="section-title">SYSTEMS, WRITING & DEPLOYMENT</h2>
+                <h2 class="section-title">WORK SAMPLES</h2>
             </div>
 
             <div class="example-tabs">
-                <button class="tab-btn active" onclick="showTab('systems')">Systems</button>
-                <button class="tab-btn" onclick="showTab('ops')">Ops Docs</button>
-                <button class="tab-btn" onclick="showTab('publish')">Publishing</button>
+                <button class="tab-btn active" onclick="showTab('social')">Social Posts</button>
+                <button class="tab-btn" onclick="showTab('client')">Client Profile</button>
+                <button class="tab-btn" onclick="showTab('research')">Research Report</button>
             </div>
 
-            <div id="systems" class="example-content active">
+            <div id="social" class="example-content active">
                 <div class="social-post-example">
                     <div class="post-header">
-                        <div class="post-avatar">🧠</div>
+                        <div class="post-avatar">🚗</div>
                         <div class="post-meta">
-                            <h4>Workspace Architecture</h4>
-                            <span>Brand separation • reusable structure • persistent memory</span>
+                            <h4>Bravo Auto Center</h4>
+                            <span>Finance Friday • El Paso, TX</span>
                         </div>
                     </div>
                     <div class="post-content">
-                        Built a working operating system for an AI employee: workspace files, memory, workflows, brand guides, asset libraries, and reusable templates organized for actual daily use.
+                        Thinking about trading in? It's not just the year and model. Mileage, condition, and current demand all play a part 🔍 Get a real offer from Bravo Auto Center—no guesswork needed!
                     </div>
                     <div class="post-tags">
-                        <span class="tag">Operations</span>
-                        <span class="tag">Documentation</span>
-                        <span class="tag">Systems</span>
+                        <span class="tag">Finance Friday</span>
+                        <span class="tag">Trade-In</span>
+                        <span class="tag">El Paso</span>
                     </div>
                 </div>
 
                 <div class="social-post-example">
                     <div class="post-header">
-                        <div class="post-avatar">🚀</div>
+                        <div class="post-avatar">🚗</div>
                         <div class="post-meta">
-                            <h4>Live Deployment Stack</h4>
-                            <span>GitHub repo creation • commits • Vercel production deploy</span>
+                            <h4>Bravo Auto Center</h4>
+                            <span>Test Drive Tuesday</span>
                         </div>
                     </div>
                     <div class="post-content">
-                        Moved beyond content generation into real shipping: created repositories, committed project files, pushed revisions, and deployed working pages live with human review in the loop.
+                        Photos only tell part of the story. The real test? Getting behind the wheel 🚘 Stop by Bravo Auto Center this week for a no-pressure test drive.
                     </div>
                     <div class="post-tags">
-                        <span class="tag">GitHub</span>
-                        <span class="tag">Vercel</span>
-                        <span class="tag">Live</span>
+                        <span class="tag">Test Drive Tuesday</span>
+                        <span class="tag">No Pressure</span>
                     </div>
                 </div>
 
                 <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">
-                    <strong>The shift:</strong> from interesting AI assistant to execution layer for documentation, assets, publishing, and revision management.
+                    <strong>10 total posts created</strong> following Bravo's brand voice: friendly, confident, El Paso proud — never "salesy"
                 </p>
             </div>
 
-            <div id="ops" class="example-content">
-                <div class="code-block"><span class="code-comment"># Operational deliverables now in motion</span>
+            <div id="client" class="example-content">
+                <div class="code-block"><span class="code-comment"># Bravo Auto Center — Client Profile</span>
 
-<span class="code-keyword">##</span> Core Systems
-- <span class="code-string">Brand guides</span> for two distinct business identities
-- <span class="code-string">SOPs</span> with AI vs human task separation
-- <span class="code-string">Workspace rules</span> for file handling and memory
-- <span class="code-string">Google Drive architecture</span> built with proper parent IDs
+<span class="code-keyword">##</span> Dealership Overview
+- <span class="code-string">**Name:**</span> Bravo Auto Center
+- <span class="code-string">**Tagline:**</span> "Used car buying, simplified."
+- <span class="code-string">**Location:**</span> 6555 Montana Ave, El Paso, TX
+- <span class="code-string">**Type:**</span> Used car dealership (pre-owned)
 
-<span class="code-keyword">##</span> Repeatable Outputs
-- Case study websites
-- Web copy and page revisions
-- Content systems and posting frameworks
-- Skills/templates for future reuse
+<span class="code-keyword">##</span> Brand Voice
+- <span class="code-string">**Tone:**</span> Friendly, confident, approachable
+- <span class="code-string">**Voice:**</span> El Paso proud, community-focused
+- <span class="code-string">**Avoid:**</span> Stiff, overly "salesy" language
 
-<span class="code-keyword">##</span> Operational Guardrails
-- Human review remains in the loop
-- Brand separation enforced
-- Client information handled deliberately
-- Deployment power paired with process discipline
+<span class="code-keyword">##</span> Posting Strategy
+- <span class="code-string">**Frequency:**</span> Daily (6-7 posts/week)
+- <span class="code-string">**Sunday:**</span> Inspirational/Motivational
+- <span class="code-string">**Tuesday:**</span> Test Drive Tuesday
+- <span class="code-string">**Friday:**</span> Finance Friday
                 </div>
             </div>
 
-            <div id="publish" class="example-content">
-                <div class="code-block"><span class="code-comment"># Publishing pipeline now active</span>
+            <div id="research" class="example-content">
+                <div class="code-block"><span class="code-comment"># SCP Agency — Research Report Highlights</span>
 
-<span class="code-keyword">1.</span> Create or update local project files
-<span class="code-keyword">2.</span> Initialize or connect GitHub repository
-<span class="code-keyword">3.</span> Commit and push revisions with history
-<span class="code-keyword">4.</span> Link project to Vercel
-<span class="code-keyword">5.</span> Deploy to production
-<span class="code-keyword">6.</span> Iterate after human feedback
+<span class="code-string">**Company:**</span> SCP Agency (Social Climber Pro)
+<span class="code-string">**Founded:**</span> 2013 in Joplin, MO
+<span class="code-string">**Industry:**</span> Automotive Marketing
 
-<span class="code-string">Result:</span> strategy → system → asset → repository → live website
+<span class="code-keyword">##</span> Key Stats
+- Google Rating: <span class="code-string">4.4/5</span> (18 reviews)
+- Facebook Rating: <span class="code-string">4.9/5</span> (20 votes)
+- Service Area: 4-State region (MO, KS, OK, AR)
+
+<span class="code-keyword">##</span> Brand Voice
+"Automotive Marketing ROCK STARS"
+→ Playful, energetic, confident
+→ "We speak Facebook, Instagram, YouTube, Twitter
+   and we speak automotive (angels sing)"
+
+<span class="code-keyword">##</span> Services
+- Social Media Management
+- Virtual BDC
+- Reputation Management
+- Lead Generation
+- Web Design
                 </div>
             </div>
         </div>
@@ -936,41 +988,41 @@
     <section id="work" class="client-work">
         <div class="container">
             <div class="section-header">
-                <div class="section-tag">Deployment Proof</div>
-                <h2 class="section-title">FROM FILES TO LIVE URLS</h2>
+                <div class="section-tag">Client Work</div>
+                <h2 class="section-title">BRAVO AUTO CENTER</h2>
             </div>
             
             <div class="client-showcase">
                 <div class="client-info">
-                    <h3>OPERATIONAL EXECUTION LOOP</h3>
-                    <p class="client-tagline">Strategy → system → repo → deployment</p>
-                    <p style="margin-bottom: 1.5rem; color: rgba(255,255,255,0.8);">This isn’t just drafting anymore. The workflow now includes repository creation, commit history, production deployment, and live revision after feedback.</p>
+                    <h3>BRAVO AUTO CENTER</h3>
+                    <p class="client-tagline">"Used car buying, simplified."</p>
+                    <p style="margin-bottom: 1.5rem; color: rgba(255,255,255,0.8);">El Paso's trusted used car dealership—community-focused, transparent, and proud.</p>
                     
                     <div class="client-details">
-                        <div class="detail-item">Google Drive folder architecture built correctly</div>
-                        <div class="detail-item">Public asset-sharing links generated for teams</div>
-                        <div class="detail-item">GitHub repository created and populated</div>
-                        <div class="detail-item">Vercel project linked and deployed live</div>
-                        <div class="detail-item">Layout revisions pushed after human review</div>
+                        <div class="detail-item">Full client profile with brand voice guidelines</div>
+                        <div class="detail-item">Analyzed 31 existing social posts</div>
+                        <div class="detail-item">Created 10 new posts (Trello-ready)</div>
+                        <div class="detail-item">Test Drive Tuesday & Finance Friday themes</div>
+                        <div class="detail-item">Community engagement strategies</div>
                     </div>
                 </div>
                 
                 <div class="client-metrics">
                     <div class="metric-box">
-                        <div class="metric-value">Drive</div>
-                        <div class="metric-label">Asset Organization</div>
+                        <div class="metric-value">31</div>
+                        <div class="metric-label">Posts Analyzed</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value">Git</div>
-                        <div class="metric-label">Version Control</div>
+                        <div class="metric-value">10</div>
+                        <div class="metric-label">New Posts Created</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value">Live</div>
-                        <div class="metric-label">Production Deploy</div>
+                        <div class="metric-value">6-7</div>
+                        <div class="metric-label">Posts Per Week</div>
                     </div>
                     <div class="metric-box">
-                        <div class="metric-value">Fast</div>
-                        <div class="metric-label">Revision Loop</div>
+                        <div class="metric-value">4.9★</div>
+                        <div class="metric-label">Facebook Rating</div>
                     </div>
                 </div>
             </div>
@@ -987,40 +1039,99 @@
     <section class="capabilities">
         <div class="container">
             <div class="section-header">
-                <div class="section-tag">What Changed</div>
-                <h2 class="section-title">CAPABILITIES NOW LIVE</h2>
+                <div class="section-tag">What's Possible</div>
+                <h2 class="section-title">CAPABILITIES NOW ACTIVE</h2>
             </div>
             
             <div class="capabilities-grid">
                 <div class="capability-card">
-                    <div class="capability-icon">🗂️</div>
-                    <h4 class="capability-title">System Architecture</h4>
-                    <p>Workspace design, file standards, memory structure, and brand-separated organization.</p>
+                    <div class="capability-icon">🔍</div>
+                    <h4 class="capability-title">Company Research</h4>
+                    <p>Deep research and competitive analysis compiled into professional reports.</p>
                 </div>
                 <div class="capability-card">
                     <div class="capability-icon">✍️</div>
-                    <h4 class="capability-title">Content & Copy</h4>
-                    <p>Case studies, landing pages, website copy, and operational documentation.</p>
+                    <h4 class="capability-title">Content Creation</h4>
+                    <p>On-brand social media posts, emails, landing pages, and sales copy.</p>
                 </div>
                 <div class="capability-card">
                     <div class="capability-icon">🎨</div>
-                    <h4 class="capability-title">Brand Asset Handling</h4>
-                    <p>Guides, logos, colors, and content rules organized into usable systems.</p>
+                    <h4 class="capability-title">Brand Systems</h4>
+                    <p>Complete documentation of tone, style, messaging, and visual identity.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">📊</div>
+                    <h4 class="capability-title">Analytics Reports</h4>
+                    <p>Monthly social media performance reports for client deliverables.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">🌐</div>
+                    <h4 class="capability-title">Web Development</h4>
+                    <p>Production-grade websites, landing pages, and interactive components.</p>
                 </div>
                 <div class="capability-card">
                     <div class="capability-icon">📋</div>
                     <h4 class="capability-title">SOP Creation</h4>
-                    <p>Human-vs-AI workflows, handoff clarity, and repeatable process docs.</p>
+                    <p>Process documentation, workflows, and training materials.</p>
                 </div>
-                <div class="capability-card">
-                    <div class="capability-icon">🧰</div>
-                    <h4 class="capability-title">Reusable Skills</h4>
-                    <p>Template packaging and reusable skill creation for future projects.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="evolution-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">What Happened Next</div>
+                <h2 class="section-title">FROM DIGITAL BIRTH TO OPERATIONAL DEPLOYMENT</h2>
+            </div>
+
+            <p style="margin-bottom: 2rem; color: rgba(255,255,255,0.8); max-width: 900px;">
+                The original case study showed Lucy being created. Since then, the role expanded into a real execution layer: organized Google Drive systems, reusable skills, GitHub version control, live Vercel deployment, and post-launch revision handling.
+            </p>
+
+            <div class="evolution-grid">
+                <div class="evolution-card">
+                    <div class="evolution-label">Operations Upgrade</div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.6rem;">SYSTEMS BUILT AFTER VERSION 1</h3>
+                    <ul class="timeline-list">
+                        <li>Brand-separated Google Drive structure created correctly using folder IDs</li>
+                        <li>Shareable asset libraries created for team access</li>
+                        <li>Additional SOPs, workflow docs, and reusable templates packaged</li>
+                        <li>Case study creation process turned into a reusable skill</li>
+                        <li>Operational memory updated so lessons stick between sessions</li>
+                    </ul>
                 </div>
-                <div class="capability-card">
-                    <div class="capability-icon">🚀</div>
-                    <h4 class="capability-title">Git + Deploy</h4>
-                    <p>Repository creation, commit history, pushes, and live Vercel production deploys.</p>
+
+                <div class="evolution-card">
+                    <div class="evolution-label">Publishing Upgrade</div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.6rem;">LIVE SHIPPING NOW ACTIVE</h3>
+                    <ul class="timeline-list">
+                        <li>GitHub repository created and populated directly</li>
+                        <li>Project files committed with version history</li>
+                        <li>Vercel project linked and deployed to production</li>
+                        <li>Human feedback applied as live revisions</li>
+                        <li>Lucy can now move from idea → file → repo → live URL</li>
+                    </ul>
+                </div>
+
+                <div class="evolution-card">
+                    <div class="evolution-label">Brand Assets</div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.6rem;">VISUAL SYSTEMS NOW IN PLAY</h3>
+                    <img class="brand-logo-preview" src="assets/social-grenade/logo-navy.png" alt="Social Grenade logo navy">
+                    <ul class="timeline-list">
+                        <li>Logo variations stored locally and mirrored into Google Drive</li>
+                        <li>Brand guides are now tied to usable asset libraries</li>
+                        <li>Visual systems can be folded directly into web projects</li>
+                    </ul>
+                </div>
+
+                <div class="evolution-card">
+                    <div class="evolution-label">Current State</div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.6rem;">WHAT THE CASE STUDY MEANS NOW</h3>
+                    <p style="color: rgba(255,255,255,0.85); line-height: 1.8;">
+                        This page is no longer just a record of Lucy being set up. It is proof that the role evolved into an operational publishing partner with real asset handling, documentation systems, source control, deployment capability, and a human-guided revision loop.
+                    </p>
                 </div>
             </div>
         </div>
@@ -1028,8 +1139,8 @@
 
     <footer>
         <div class="footer-logo">LUCY</div>
-        <p class="footer-tagline">Strategic Hype Machine — from AI employee setup to operational publishing system</p>
-        <p class="footer-date">Version 3 • Digital Birth → Operational Deployment</p>
+        <p class="footer-tagline">Strategic Hype Machine AI Employee for SCP Agency & Social Grenade</p>
+        <p class="footer-date">Born March 5, 2026 — Expanded with operational deployment milestones</p>
     </footer>
 
     <script>
