@@ -1,754 +1,1107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Build Websites with Lucy | Social Grenade</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --navy: #183159;
-      --teal: #38c2d6;
-      --teal-dark: #108ea0;
-      --ink: #23223d;
-      --bg: #0f1728;
-      --panel: rgba(255,255,255,0.05);
-      --panel-border: rgba(56,194,214,0.18);
-      --text: #f4f7fb;
-      --muted: rgba(244,247,251,0.72);
-      --line: rgba(255,255,255,0.08);
-      --shadow: 0 20px 50px rgba(0,0,0,0.28);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucy: From Digital Birth to Operational Deployment | Case Study</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #183159;
+            --teal: #38c2d6;
+            --dark-slate: #23223d;
+            --dark-teal: #108ea0;
+            --white: #ffffff;
+            --orange: #F36C3C;
+        }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background:
-        radial-gradient(circle at top right, rgba(56,194,214,0.16), transparent 28%),
-        linear-gradient(180deg, #10203a 0%, #0c1323 100%);
-      color: var(--text);
-      line-height: 1.6;
-    }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Syne', sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-    .bg-grid {
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 32px 32px;
-      mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-      pointer-events: none;
-      z-index: 0;
-    }
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(56, 194, 214, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 194, 214, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-    .container {
-      width: min(1180px, calc(100% - 2rem));
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
+        .bg-grid::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 20% 80%, rgba(56, 194, 214, 0.15) 0%, transparent 50%),
+                        radial-gradient(ellipse at 80% 20%, rgba(16, 142, 160, 0.1) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
 
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      backdrop-filter: blur(14px);
-      background: rgba(12, 19, 35, 0.7);
-      border-bottom: 1px solid var(--line);
-    }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
 
-    .nav-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1rem 0;
-    }
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(to bottom, var(--navy) 0%, transparent 100%);
+        }
 
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-    }
+        .logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2rem;
+            letter-spacing: 0.1em;
+            color: var(--teal);
+        }
 
-    .logo-wrap img {
-      width: 42px;
-      height: 42px;
-      object-fit: contain;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.05);
-      padding: 0.35rem;
-    }
+        .logo span { color: var(--white); }
 
-    .logo-text {
-      line-height: 1;
-    }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
 
-    .logo-text strong {
-      display: block;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
-      letter-spacing: 0.06em;
-    }
+        .nav-links a {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
 
-    .logo-text span {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      color: var(--teal);
-      letter-spacing: 0.08em;
-    }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; left: 0;
+            width: 0; height: 2px;
+            background: var(--teal);
+            transition: width 0.3s ease;
+        }
 
-    .nav-links {
-      display: flex;
-      gap: 1.1rem;
-      flex-wrap: wrap;
-    }
+        .nav-links a:hover { color: var(--teal); }
+        .nav-links a:hover::after { width: 100%; }
 
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.92rem;
-      font-weight: 600;
-    }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
 
-    .nav-links a:hover { color: var(--teal); }
+        .hero-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--teal);
+            border: 1px solid var(--teal);
+            padding: 0.5rem 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
 
-    section { padding: 5.5rem 0; }
+        .hero h1 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(4rem, 12vw, 10rem);
+            letter-spacing: 0.05em;
+            line-height: 0.9;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--white) 0%, var(--teal) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
 
-    .hero {
-      min-height: 86vh;
-      display: flex;
-      align-items: center;
-    }
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 2rem;
-      align-items: center;
-    }
+        .hero-stats {
+            display: flex;
+            gap: 4rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
 
-    .eyebrow {
-      display: inline-block;
-      padding: 0.45rem 0.85rem;
-      border: 1px solid rgba(56,194,214,0.35);
-      border-radius: 999px;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--teal);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
+        .stat { text-align: center; }
+        .stat-number {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 4rem;
+            color: var(--teal);
+            line-height: 1;
+        }
+        .stat-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.6);
+        }
 
-    h1, h2, h3, h4 {
-      line-height: 0.96;
-      text-transform: uppercase;
-      font-family: 'Bebas Neue', sans-serif;
-      letter-spacing: 0.04em;
-    }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    h1 {
-      font-size: clamp(3.4rem, 8vw, 6.8rem);
-      margin-bottom: 1rem;
-    }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        .scroll-indicator::before {
+            content: '↓';
+            font-size: 2rem;
+            color: var(--teal);
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
 
-    .hero p {
-      color: var(--muted);
-      max-width: 760px;
-      font-size: 1.08rem;
-      margin-bottom: 1.5rem;
-    }
+        section {
+            padding: 8rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
 
-    .cta-row {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 2rem;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.95rem 1.25rem;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 800;
-      border: 1px solid transparent;
-      transition: 0.2s ease;
-    }
+        .section-header {
+            margin-bottom: 4rem;
+        }
 
-    .btn-primary {
-      background: var(--teal);
-      color: var(--navy);
-      box-shadow: var(--shadow);
-    }
+        .section-tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
 
-    .btn-secondary {
-      border-color: rgba(56,194,214,0.28);
-      color: var(--text);
-      background: rgba(255,255,255,0.04);
-    }
+        .section-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            letter-spacing: 0.05em;
+            line-height: 1;
+        }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
-    }
+        /* File Structure Section */
+        .file-structure {
+            background: var(--dark-slate);
+        }
 
-    .stat {
-      border: 1px solid var(--panel-border);
-      background: var(--panel);
-      border-radius: 16px;
-      padding: 1.25rem;
-    }
+        .file-tree {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(56, 194, 214, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 2;
+            overflow-x: auto;
+        }
 
-    .stat-number {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      color: var(--teal);
-      line-height: 1;
-    }
+        .tree-line {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-    .stat-label {
-      font-size: 0.85rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-top: 0.35rem;
-    }
+        .tree-indent { color: rgba(255,255,255,0.3); }
+        .tree-folder { color: var(--teal); }
+        .tree-file { color: rgba(255,255,255,0.8); }
+        .tree-comment { color: rgba(255,255,255,0.4); font-style: italic; }
 
-    .hero-panel,
-    .card,
-    .step,
-    .example-card,
-    .pipeline-card,
-    .prompt-card {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-    }
+        /* Brand Assets Section */
+        .brand-assets {
+            background: var(--navy);
+        }
 
-    .hero-panel {
-      padding: 1.6rem;
-    }
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
 
-    .hero-panel img {
-      width: 100%;
-      max-width: 240px;
-      display: block;
-      margin: 0 auto 1rem;
-      object-fit: contain;
-    }
+        .asset-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(56, 194, 214, 0.2);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
 
-    .hero-panel h3 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: var(--teal);
-    }
+        .asset-card:hover {
+            border-color: var(--teal);
+            transform: translateY(-5px);
+        }
 
-    .hero-panel ul {
-      list-style: none;
-      display: grid;
-      gap: 0.8rem;
-    }
+        .asset-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
 
-    .hero-panel li {
-      color: var(--muted);
-      padding-left: 1rem;
-      position: relative;
-    }
+        .asset-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 1.5rem;
+            color: var(--teal);
+            margin-bottom: 0.5rem;
+        }
 
-    .hero-panel li::before,
-    .step li::before,
-    .example-card li::before,
-    .prompt-card li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: var(--teal);
-    }
+        .asset-meta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 1rem;
+        }
 
-    .section-head {
-      margin-bottom: 2rem;
-      max-width: 860px;
-    }
+        .asset-list {
+            list-style: none;
+            font-size: 0.9rem;
+        }
 
-    .section-head .eyebrow { margin-bottom: 0.8rem; }
-    .section-head h2 { font-size: clamp(2.4rem, 5vw, 4.4rem); margin-bottom: 0.8rem; }
-    .section-head p { color: var(--muted); font-size: 1.03rem; }
+        .asset-list li {
+            padding: 0.25rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
+        .asset-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--teal);
+        }
 
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
+        .brand-logo-preview {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 12px;
+            margin: 1rem 0 1.25rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(56, 194, 214, 0.18);
+            padding: 1rem;
+            display: block;
+        }
 
-    .card {
-      padding: 1.5rem;
-    }
+        .brand-badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border: 1px solid rgba(56, 194, 214, 0.3);
+            border-radius: 999px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
 
-    .card h3 {
-      font-size: 1.8rem;
-      margin-bottom: 0.8rem;
-      color: var(--teal);
-    }
+        /* Color Palette Display */
+        .color-palette {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
 
-    .card p,
-    .card li,
-    .step p,
-    .example-card p,
-    .pipeline-card p,
-    .prompt-card p {
-      color: var(--muted);
-    }
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.6rem;
+        }
 
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 1rem;
-    }
+        /* Output Examples Section */
+        .output-examples {
+            background: var(--dark-slate);
+        }
 
-    .step {
-      padding: 1.35rem;
-      position: relative;
-      overflow: hidden;
-    }
+        .example-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
 
-    .step-num {
-      font-family: 'Space Mono', monospace;
-      color: var(--teal);
-      font-size: 0.8rem;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.75rem;
-    }
+        .tab-btn {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.75rem 1.5rem;
+            background: transparent;
+            border: 1px solid rgba(56, 194, 214, 0.3);
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-    .step h3 {
-      font-size: 1.6rem;
-      margin-bottom: 0.6rem;
-    }
+        .tab-btn:hover, .tab-btn.active {
+            background: var(--teal);
+            border-color: var(--teal);
+            color: var(--navy);
+        }
 
-    .step ul,
-    .example-card ul,
-    .prompt-card ul {
-      list-style: none;
-      display: grid;
-      gap: 0.55rem;
-      margin-top: 1rem;
-    }
+        .example-content {
+            display: none;
+        }
 
-    .step li,
-    .example-card li,
-    .prompt-card li {
-      position: relative;
-      padding-left: 1rem;
-    }
+        .example-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
 
-    .pipeline {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 1rem;
-      align-items: stretch;
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .pipeline-card {
-      padding: 1.1rem;
-      text-align: center;
-    }
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(56, 194, 214, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            color: rgba(255,255,255,0.9);
+        }
 
-    .pipeline-card .mini {
-      font-family: 'Space Mono', monospace;
-      color: var(--teal);
-      font-size: 0.75rem;
-      margin-bottom: 0.6rem;
-      text-transform: uppercase;
-    }
+        .code-comment { color: rgba(255,255,255,0.4); }
+        .code-string { color: var(--teal); }
+        .code-keyword { color: var(--orange); }
 
-    .pipeline-card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 0.55rem;
-    }
+        /* Social Post Example */
+        .social-post-example {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 1px solid rgba(56, 194, 214, 0.2);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
 
-    .examples {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
 
-    .example-card,
-    .prompt-card {
-      padding: 1.5rem;
-    }
+        .post-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal), var(--dark-teal));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
 
-    .example-card h3,
-    .prompt-card h3 {
-      font-size: 1.85rem;
-      margin-bottom: 0.75rem;
-      color: var(--teal);
-    }
+        .post-meta h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
 
-    .example-tag {
-      display: inline-block;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--teal);
-      margin-bottom: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
+        .post-meta span {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+        }
 
-    .callout {
-      border-left: 4px solid var(--teal);
-      background: rgba(255,255,255,0.04);
-      border-radius: 0 16px 16px 0;
-      padding: 1.25rem 1.3rem;
-      color: var(--muted);
-      margin-top: 1.5rem;
-    }
+        .post-content {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
 
-    .footer {
-      padding: 4rem 0 5rem;
-      text-align: center;
-      border-top: 1px solid var(--line);
-    }
+        .post-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
 
-    .footer h2 {
-      font-size: 2.4rem;
-      margin-bottom: 0.8rem;
-    }
+        .tag {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(56, 194, 214, 0.1);
+            border: 1px solid rgba(56, 194, 214, 0.3);
+            border-radius: 20px;
+            color: var(--teal);
+        }
 
-    .footer p {
-      color: var(--muted);
-      max-width: 720px;
-      margin: 0 auto 1.25rem;
-    }
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
 
-    .small {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.5);
-    }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(56, 194, 214, 0.2);
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
 
-    @media (max-width: 1024px) {
-      .hero-grid,
-      .grid-2,
-      .grid-3,
-      .examples,
-      .steps,
-      .pipeline {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--teal), var(--dark-teal));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
 
-    @media (max-width: 768px) {
-      .nav-inner { align-items: flex-start; flex-direction: column; }
-      .nav-links { gap: 0.8rem; }
-      .hero-grid,
-      .grid-2,
-      .grid-3,
-      .examples,
-      .steps,
-      .pipeline,
-      .stats {
-        grid-template-columns: 1fr;
-      }
-      .hero { min-height: auto; padding-top: 3rem; }
-      section { padding: 4rem 0; }
-    }
-  </style>
+        .stat-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--teal);
+            transform: translateY(-5px);
+        }
+
+        .stat-card:hover::before { transform: scaleX(1); }
+
+        .stat-card-number {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 3.5rem;
+            color: var(--teal);
+            line-height: 1;
+        }
+
+        .stat-card-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 0.5rem;
+        }
+
+        /* Client Work */
+        .client-work { background: var(--dark-slate); position: relative; overflow: hidden; }
+        .client-work::after {
+            content: '';
+            position: absolute;
+            bottom: -50%; right: -20%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(56, 194, 214, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .client-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .client-info h3 {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+
+        .client-tagline {
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .client-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .detail-item::before {
+            content: '→';
+            color: var(--teal);
+        }
+
+        .client-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .metric-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(56, 194, 214, 0.3);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: var(--teal);
+        }
+
+        .metric-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: var(--navy);
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .quote {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+            line-height: 1.4;
+        }
+
+        .quote-author {
+            font-family: 'Space Mono', monospace;
+            color: var(--teal);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            font-size: 0.9rem;
+        }
+
+        /* Capabilities */
+        .capabilities { background: var(--dark-slate); }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .capability-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(56, 194, 214, 0.1);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .capability-card:hover {
+            border-color: var(--teal);
+            background: rgba(56, 194, 214, 0.05);
+        }
+
+        .capability-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .capability-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(56, 194, 214, 0.2);
+        }
+
+        .footer-logo {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 2.5rem;
+            color: var(--teal);
+            margin-bottom: 1rem;
+        }
+
+        .footer-tagline {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+        }
+
+        .footer-date {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 1rem; }
+            .nav-links { display: none; }
+            .hero-stats { flex-direction: column; gap: 2rem; }
+            .client-showcase { grid-template-columns: 1fr; }
+            .assets-grid { grid-template-columns: 1fr; }
+            .example-tabs { justify-content: center; }
+            section { padding: 4rem 1.5rem; }
+        }
+    </style>
 </head>
 <body>
-  <div class="bg-grid"></div>
+    <div class="bg-grid"></div>
 
-  <nav>
-    <div class="container nav-inner">
-      <div class="logo-wrap">
-        <img src="assets/social-grenade/logo-navy.png" alt="Social Grenade logo" />
-        <div class="logo-text">
-          <strong>Build with Lucy</strong>
-          <span>Social Grenade deployment workflow</span>
-        </div>
-      </div>
-      <div class="nav-links">
-        <a href="#how">How It Works</a>
-        <a href="#pipeline">Pipeline</a>
-        <a href="#examples">Agency Examples</a>
-        <a href="#prompts">What to Ask</a>
-      </div>
-    </div>
-  </nav>
-
-  <section class="hero">
-    <div class="container hero-grid">
-      <div>
-        <div class="eyebrow">Website Creation Workflow</div>
-        <h1>Robin's Team Can Build and Deploy Websites With Lucy</h1>
-        <p>
-          Lucy can help your team go from idea → page structure → copy → branded design → GitHub repo → live Vercel deployment.
-          That means faster launches, cleaner handoffs, and fewer good ideas dying in a notes app.
-        </p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="#how">See the Process</a>
-          <a class="btn btn-secondary" href="#examples">See Agency Examples</a>
-        </div>
-        <div class="stats">
-          <div class="stat">
-            <div class="stat-number">2</div>
-            <div class="stat-label">Agency Use Cases</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">GitHub</div>
-            <div class="stat-label">Version Control Ready</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">Vercel</div>
-            <div class="stat-label">Live Deployment Ready</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-panel">
-        <img src="assets/social-grenade/logo-teal.png" alt="Social Grenade teal logo" />
-        <h3>What Lucy Handles</h3>
-        <ul>
-          <li>Drafts page structure, copy, messaging, and CTAs</li>
-          <li>Builds standalone web pages and front-end prototypes</li>
-          <li>Creates repos, commits files, and pushes changes</li>
-          <li>Links projects to Vercel and deploys them live</li>
-          <li>Updates pages after team feedback and redeploys</li>
+    <nav>
+        <div class="logo">Lucy<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="#structure">Systems</a></li>
+            <li><a href="#assets">Brands</a></li>
+            <li><a href="#output">Outputs</a></li>
+            <li><a href="#work">Deploy</a></li>
         </ul>
-      </div>
-    </div>
-  </section>
+    </nav>
 
-  <section id="how">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">How It Works</div>
-        <h2>Here’s the Real Workflow</h2>
-        <p>
-          This is not “AI magic.” It’s a practical production loop. Robin or the team gives Lucy a goal, brand direction, and rough outcome. Lucy builds the page, stages the files, pushes to GitHub, and deploys to Vercel.
-        </p>
-      </div>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">Step 01</div>
-          <h3>Give Lucy the Goal</h3>
-          <p>Tell Lucy what kind of page you want, who it’s for, what brand it belongs to, and what action the visitor should take.</p>
-          <ul>
-            <li>Landing page</li>
-            <li>Lead magnet page</li>
-            <li>Case study page</li>
-            <li>Internal team resource page</li>
-          </ul>
+    <section class="hero">
+        <div class="hero-badge">Case Study — March 5, 2026</div>
+        <h1>LUCY'S<br>DIGITAL BIRTH</h1>
+        <p class="hero-subtitle">From zero to fully operational AI Employee in one day. Since then, Lucy has kept evolving into a real support system for Robin and her team—organizing assets, documenting workflows, and helping ship work live.</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-number">2</div>
+                <div class="stat-label">Companies</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Assets & Files</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">Live</div>
+                <div class="stat-label">Deployments</div>
+            </div>
         </div>
+        <div class="scroll-indicator"></div>
+    </section>
 
-        <div class="step">
-          <div class="step-num">Step 02</div>
-          <h3>Lucy Builds the Page</h3>
-          <p>Lucy writes the copy, lays out the sections, applies brand styling, and builds the front-end files in the workspace.</p>
-          <ul>
-            <li>Headlines + messaging</li>
-            <li>Section layout</li>
-            <li>Brand colors and fonts</li>
-            <li>Examples, CTAs, proof blocks</li>
-          </ul>
-        </div>
+    <section class="capabilities">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Team Support</div>
+                <h2 class="section-title">CAPABILITIES NOW ACTIVE</h2>
+            </div>
+            
+            <p style="margin-bottom: 2rem; color: rgba(255,255,255,0.8); max-width: 900px;">
+                These are the ways Lucy actively helps Robin and the team reduce friction, stay organized, and move work from idea to execution.
+            </p>
 
-        <div class="step">
-          <div class="step-num">Step 03</div>
-          <h3>Push to GitHub</h3>
-          <p>Once approved, Lucy can create a new repository or update an existing one, commit the files, and push the changes.</p>
-          <ul>
-            <li>Repo creation</li>
-            <li>Commit history</li>
-            <li>Version control</li>
-            <li>Safe iteration</li>
-          </ul>
+            <div class="capabilities-grid">
+                <div class="capability-card">
+                    <div class="capability-icon">🗂️</div>
+                    <h4 class="capability-title">System Support</h4>
+                    <p>Workspace design, file standards, memory structure, and brand-separated organization.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">✍️</div>
+                    <h4 class="capability-title">Content Support</h4>
+                    <p>Case studies, landing pages, website copy, and operational documentation.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">🎨</div>
+                    <h4 class="capability-title">Brand Support</h4>
+                    <p>Guides, logos, colors, and content rules organized into usable systems.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">📋</div>
+                    <h4 class="capability-title">Ops Support</h4>
+                    <p>Human-vs-AI workflows, handoff clarity, and repeatable process docs.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">🧰</div>
+                    <h4 class="capability-title">Asset Support</h4>
+                    <p>Template packaging and reusable skill creation for future projects.</p>
+                </div>
+                <div class="capability-card">
+                    <div class="capability-icon">🚀</div>
+                    <h4 class="capability-title">Publishing Support</h4>
+                    <p>Repository creation, commit history, pushes, and live Vercel production deploys.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="step">
-          <div class="step-num">Step 04</div>
-          <h3>Deploy to Vercel</h3>
-          <p>Lucy links the repo or project to Vercel, deploys it live, and can update it again when the team wants revisions.</p>
-          <ul>
-            <li>Live preview or production deploy</li>
-            <li>Rapid changes after review</li>
-            <li>Clean web publishing pipeline</li>
-            <li>Real URLs, not just drafts</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+    <section id="structure" class="file-structure">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Behind The Scenes</div>
+                <h2 class="section-title">FILE STRUCTURE BUILT</h2>
+            </div>
+            
+            <p style="margin-bottom: 2rem; color: rgba(255,255,255,0.8);">
+                The system now spans structured workspace architecture, brand-separated file handling, reusable documentation, and deployment-ready project organization.
+            </p>
 
-  <section id="pipeline">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Pipeline</div>
-        <h2>From Idea to Live Site</h2>
-        <p>
-          This is the exact chain your team can use when you want something built fast without losing structure.
-        </p>
-      </div>
+            <div class="file-tree">
+<div class="tree-line"><span class="tree-folder">📁 workspace/</span></div>
+<div class="tree-line"><span class="tree-indent">├── </span><span class="tree-folder">📁 projects/</span></div>
+<div class="tree-line"><span class="tree-indent">│   ├── </span><span class="tree-folder">📁 scp-agency/</span><span class="tree-comment"> ← SCP Agency business unit</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   ├── </span><span class="tree-folder">📁 clients/</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   │   └── </span><span class="tree-folder">📁 bravo-auto-center/</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   │       ├── </span><span class="tree-file">📄 client-profile.md</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   │       ├── </span><span class="tree-file">📄 content-calendar.html</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   │       ├── </span><span class="tree-file">📄 10-new-social-posts.md</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   │       └── </span><span class="tree-folder">📁 resources/</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   ├── </span><span class="tree-file">📄 brand-guide-scp-agency.md</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   └── </span><span class="tree-file">📄 scp-agency-research-report.md</span></div>
+<div class="tree-line"><span class="tree-indent">│   ├── </span><span class="tree-folder">📁 social-grenade/</span><span class="tree-comment"> ← Social Grenade business unit</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   ├── </span><span class="tree-folder">📁 clients/</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   ├── </span><span class="tree-folder">📁 assets/</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   │   ├── </span><span class="tree-file">🖼️ logo-navy.png</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   │   ├── </span><span class="tree-file">🖼️ logo-teal.png</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   │   ├── </span><span class="tree-file">🖼️ logo-camo.png</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   │   └── </span><span class="tree-file">🖼️ logo-transparent.png</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   ├── </span><span class="tree-file">📄 brand-guide-social-grenade.md</span></div>
+<div class="tree-line"><span class="tree-indent">│   │   └── </span><span class="tree-file">📄 social-grenade-research-report.md</span></div>
+<div class="tree-line"><span class="tree-indent">│   ├── </span><span class="tree-file">📄 lucy-work-summary.md</span></div>
+<div class="tree-line"><span class="tree-indent">│   └── </span><span class="tree-file">🌐 lucy-case-study.html</span></div>
+<div class="tree-line"><span class="tree-indent">├── </span><span class="tree-file">📄 SOUL.md</span><span class="tree-comment"> ← Strategic Hype Machine persona</span></div>
+<div class="tree-line"><span class="tree-indent">├── </span><span class="tree-file">📄 USER.md</span><span class="tree-comment"> ← Team roster & context</span></div>
+<div class="tree-line"><span class="tree-indent">├── </span><span class="tree-file">📄 MEMORY.md</span><span class="tree-comment"> ← Permanent memory</span></div>
+<div class="tree-line"><span class="tree-indent">└── </span><span class="tree-folder">📁 skills/</span><span class="tree-comment"> ← AI Persona OS + Frontend Design</span></div>
+            </div>
+        </div>
+    </section>
 
-      <div class="pipeline">
-        <div class="pipeline-card">
-          <div class="mini">01</div>
-          <h3>Brief</h3>
-          <p>Give Lucy the goal, audience, and brand.</p>
-        </div>
-        <div class="pipeline-card">
-          <div class="mini">02</div>
-          <h3>Build</h3>
-          <p>Lucy creates the web page in the workspace.</p>
-        </div>
-        <div class="pipeline-card">
-          <div class="mini">03</div>
-          <h3>Review</h3>
-          <p>Robin or the team gives revision notes.</p>
-        </div>
-        <div class="pipeline-card">
-          <div class="mini">04</div>
-          <h3>Push</h3>
-          <p>Lucy commits to GitHub and preserves history.</p>
-        </div>
-        <div class="pipeline-card">
-          <div class="mini">05</div>
-          <h3>Deploy</h3>
-          <p>Lucy ships it to Vercel and updates it live.</p>
-        </div>
-      </div>
+    <section id="assets" class="brand-assets">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Brand Systems</div>
+                <h2 class="section-title">MULTI-BRAND ASSETS & IDENTITY</h2>
+            </div>
 
-      <div class="callout">
-        <strong>Important:</strong> this workflow works best when the team gives Lucy a clear purpose, target audience, brand, and call-to-action. The better the brief, the stronger the first version.
-      </div>
-    </div>
-  </section>
+            <div class="assets-grid">
+                <div class="asset-card">
+                    <div class="brand-badge">Brand 01</div>
+                    <div class="asset-title">SCP AGENCY SYSTEM</div>
+                    <div class="asset-meta">Voice, colors, fonts, positioning</div>
+                    <div class="color-palette">
+                        <div class="color-swatch" style="background: #F36C3C; color: white;">#F36C3C</div>
+                        <div class="color-swatch" style="background: #39C1D5; color: #1A3159;">#39C1D5</div>
+                        <div class="color-swatch" style="background: #1A3159; color: white;">#1A3159</div>
+                    </div>
+                    <ul class="asset-list">
+                        <li>Rockstar-style brand voice documented</li>
+                        <li>Color system captured for future builds</li>
+                        <li>Typography choices organized</li>
+                        <li>Website and content work aligned to brand</li>
+                    </ul>
+                </div>
 
-  <section id="examples">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">Agency Examples</div>
-        <h2>How Both Agencies Could Use This</h2>
-        <p>
-          Same deployment engine. Different business goals. Here’s how Robin’s team could use Lucy for both sides of the business.
-        </p>
-      </div>
+                <div class="asset-card">
+                    <div class="brand-badge">Brand 02</div>
+                    <div class="asset-title">SOCIAL GRENADE SYSTEM</div>
+                    <div class="asset-meta">Brand guide + logo library + content rules</div>
+                    <img class="brand-logo-preview" src="assets/social-grenade/logo-navy.png" alt="Social Grenade logo navy">
+                    <ul class="asset-list">
+                        <li>4 logo variations organized and stored</li>
+                        <li>Brand guide and content rules documented</li>
+                        <li>Asset library uploaded to Google Drive</li>
+                        <li>Public share link generated for team access</li>
+                    </ul>
+                </div>
 
-      <div class="examples">
-        <div class="example-card">
-          <div class="example-tag">SCP Agency</div>
-          <h3>Web Pages for Client Marketing</h3>
-          <p>SCP Agency can use Lucy to rapidly build pages that support sales, lead generation, and campaign execution.</p>
-          <ul>
-            <li>Client campaign landing pages</li>
-            <li>Seasonal promo pages for dealerships</li>
-            <li>Lead capture pages for offers or giveaways</li>
-            <li>Case study pages showing agency wins</li>
-            <li>Service pages for SCP’s own website</li>
-          </ul>
+                <div class="asset-card">
+                    <div class="brand-badge">Visual Assets</div>
+                    <div class="asset-title">LOGO VARIATIONS</div>
+                    <div class="asset-meta">Deployment-ready brand asset handling</div>
+                    <img class="brand-logo-preview" src="assets/social-grenade/logo-teal.png" alt="Social Grenade logo teal">
+                    <ul class="asset-list">
+                        <li>Primary, accent, camo, and transparent files</li>
+                        <li>Stored locally and mirrored to Drive</li>
+                        <li>Ready for web, docs, and internal use</li>
+                        <li>Handled as reusable production assets</li>
+                    </ul>
+                </div>
+
+                <div class="asset-card">
+                    <div class="brand-badge">Ops Backbone</div>
+                    <div class="asset-title">DOCUMENTED SYSTEMS</div>
+                    <div class="asset-meta">Not just files — usable infrastructure</div>
+                    <ul class="asset-list">
+                        <li>Persona, user, memory, and workflow files</li>
+                        <li>Brand-separated folder logic enforced</li>
+                        <li>Google Drive structure built correctly with IDs</li>
+                        <li>Reusable templates and skills packaged</li>
+                    </ul>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="example-card">
-          <div class="example-tag">Social Grenade</div>
-          <h3>Product, Training, and Sales Pages</h3>
-          <p>Social Grenade can use Lucy to create pages that drive product adoption, explain offers, and support Academy-style education.</p>
-          <ul>
-            <li>Training registration pages</li>
-            <li>Feature highlight pages for sales teams</li>
-            <li>Demo request landing pages</li>
-            <li>Academy event or guest speaker pages</li>
-            <li>Recruiting or onboarding pages for dealers</li>
-          </ul>
+    <section id="output" class="output-examples">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Actual Output</div>
+                <h2 class="section-title">SYSTEMS, WRITING & DEPLOYMENT</h2>
+            </div>
+
+            <div class="example-tabs">
+                <button class="tab-btn active" onclick="showTab('systems')">Systems</button>
+                <button class="tab-btn" onclick="showTab('ops')">Ops Docs</button>
+                <button class="tab-btn" onclick="showTab('publish')">Publishing</button>
+            </div>
+
+            <div id="systems" class="example-content active">
+                <div class="social-post-example">
+                    <div class="post-header">
+                        <div class="post-avatar">🧠</div>
+                        <div class="post-meta">
+                            <h4>Workspace Architecture</h4>
+                            <span>Brand separation • reusable structure • persistent memory</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        Built a working operating system for an AI employee: workspace files, memory, workflows, brand guides, asset libraries, and reusable templates organized for actual daily use.
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag">Operations</span>
+                        <span class="tag">Documentation</span>
+                        <span class="tag">Systems</span>
+                    </div>
+                </div>
+
+                <div class="social-post-example">
+                    <div class="post-header">
+                        <div class="post-avatar">🚀</div>
+                        <div class="post-meta">
+                            <h4>Live Deployment Stack</h4>
+                            <span>GitHub repo creation • commits • Vercel production deploy</span>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        Moved beyond content generation into real shipping: created repositories, committed project files, pushed revisions, and deployed working pages live with human review in the loop.
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag">GitHub</span>
+                        <span class="tag">Vercel</span>
+                        <span class="tag">Live</span>
+                    </div>
+                </div>
+
+                <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem;">
+                    <strong>The shift:</strong> from interesting AI assistant to execution layer for documentation, assets, publishing, and revision management.
+                </p>
+            </div>
+
+            <div id="ops" class="example-content">
+                <div class="code-block"><span class="code-comment"># Operational deliverables now in motion</span>
+
+<span class="code-keyword">##</span> Core Systems
+- <span class="code-string">Brand guides</span> for two distinct business identities
+- <span class="code-string">SOPs</span> with AI vs human task separation
+- <span class="code-string">Workspace rules</span> for file handling and memory
+- <span class="code-string">Google Drive architecture</span> built with proper parent IDs
+
+<span class="code-keyword">##</span> Repeatable Outputs
+- Case study websites
+- Web copy and page revisions
+- Content systems and posting frameworks
+- Skills/templates for future reuse
+
+<span class="code-keyword">##</span> Operational Guardrails
+- Human review remains in the loop
+- Brand separation enforced
+- Client information handled deliberately
+- Deployment power paired with process discipline
+                </div>
+            </div>
+
+            <div id="publish" class="example-content">
+                <div class="code-block"><span class="code-comment"># Publishing pipeline now active</span>
+
+<span class="code-keyword">1.</span> Create or update local project files
+<span class="code-keyword">2.</span> Initialize or connect GitHub repository
+<span class="code-keyword">3.</span> Commit and push revisions with history
+<span class="code-keyword">4.</span> Link project to Vercel
+<span class="code-keyword">5.</span> Deploy to production
+<span class="code-keyword">6.</span> Iterate after human feedback
+
+<span class="code-string">Result:</span> strategy → system → asset → repository → live website
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <div class="container grid-2">
-      <div class="card">
-        <div class="eyebrow">Why This Helps Robin</div>
-        <h3>Less Bottleneck. More Shipping.</h3>
-        <p>
-          Robin doesn’t need every web page to start from scratch or get stuck waiting for perfect first drafts. Lucy can build the first solid version fast, package it cleanly, and make changes after feedback.
-        </p>
-      </div>
-      <div class="card">
-        <div class="eyebrow">Why This Helps the Team</div>
-        <h3>Clearer Handoffs. Cleaner Execution.</h3>
-        <p>
-          Instead of loose ideas bouncing around chat, the team gets an actual page, in a repo, on a live URL. That makes review easier and execution cleaner for ops, creative, and leadership.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section id="prompts">
-    <div class="container">
-      <div class="section-head">
-        <div class="eyebrow">What to Ask Lucy</div>
-        <h2>Prompt Examples the Team Can Use</h2>
-        <p>
-          Keep it simple. Lucy does better with direct briefs than vague “make something cool” requests.
-        </p>
-      </div>
-
-      <div class="grid-3">
-        <div class="prompt-card">
-          <h3>For SCP Agency</h3>
-          <ul>
-            <li>Create a landing page for a dealership spring sales event using SCP branding.</li>
-            <li>Build a case study page showing how our agency improves organic social results.</li>
-            <li>Make a lead capture page for a free audit offer and deploy it to Vercel.</li>
-          </ul>
+    <section id="work" class="client-work">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Deployment Proof</div>
+                <h2 class="section-title">FROM FILES TO LIVE URLS</h2>
+            </div>
+            
+            <div class="client-showcase">
+                <div class="client-info">
+                    <h3>OPERATIONAL EXECUTION LOOP</h3>
+                    <p class="client-tagline">Strategy → system → repo → deployment</p>
+                    <p style="margin-bottom: 1.5rem; color: rgba(255,255,255,0.8);">This isn’t just drafting anymore. The workflow now includes repository creation, commit history, production deployment, and live revision after feedback.</p>
+                    
+                    <div class="client-details">
+                        <div class="detail-item">Google Drive folder architecture built correctly</div>
+                        <div class="detail-item">Public asset-sharing links generated for teams</div>
+                        <div class="detail-item">GitHub repository created and populated</div>
+                        <div class="detail-item">Vercel project linked and deployed live</div>
+                        <div class="detail-item">Layout revisions pushed after human review</div>
+                    </div>
+                </div>
+                
+                <div class="client-metrics">
+                    <div class="metric-box">
+                        <div class="metric-value">Drive</div>
+                        <div class="metric-label">Asset Organization</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">Git</div>
+                        <div class="metric-label">Version Control</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">Live</div>
+                        <div class="metric-label">Production Deploy</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-value">Fast</div>
+                        <div class="metric-label">Revision Loop</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="prompt-card">
-          <h3>For Social Grenade</h3>
-          <ul>
-            <li>Create a training signup page for an Academy session using Social Grenade branding.</li>
-            <li>Build a product explainer page for dealership salespeople and push it live.</li>
-            <li>Make a page for a guest speaker event and connect it to GitHub + Vercel.</li>
-          </ul>
-        </div>
-        <div class="prompt-card">
-          <h3>For Internal Use</h3>
-          <ul>
-            <li>Create an internal team resource page documenting a workflow.</li>
-            <li>Build a recruiting page for one of Robin’s businesses.</li>
-            <li>Turn this outline into a polished web page and deploy it live.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="footer">
-    <div class="container">
-      <div class="eyebrow">Built with Social Grenade Branding</div>
-      <h2>Lucy Can Help the Team Ship</h2>
-      <p>
-        If the team has an idea for a web page, Lucy can help turn it into an actual site, get it into GitHub, and deploy it to Vercel. That means less friction, faster first drafts, and a cleaner path from concept to launch.
-      </p>
-      <div class="small">Strategy → Build → GitHub → Vercel → Live</div>
-    </div>
-  </section>
+    <section class="evolution-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">The Story</div>
+                <h2 class="section-title">HOW LUCY STARTED SUPPORTING THE TEAM</h2>
+            </div>
+
+            <p style="margin-bottom: 2rem; color: rgba(255,255,255,0.8); max-width: 900px;">
+                Lucy did not become useful because a prompt sounded impressive. Lucy became useful by reducing friction for Robin and the team: organizing information, documenting systems, shaping brand assets, packaging outputs, and now pushing work all the way to live deployment.
+            </p>
+
+            <div class="evolution-grid">
+                <div class="evolution-card">
+                    <div class="evolution-label">Phase 01</div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.6rem;">GET THE CHAOS ORGANIZED</h3>
+                    <p style="color: rgba(255,255,255,0.85); line-height: 1.8;">
+                        The first job was not glamour. It was structure. Build the workspace. Define the persona. Separate brands correctly. Create memory that persists. Turn scattered context into something Robin and the team could actually use again later.
+                    </p>
+                </div>
+
+                <div class="evolution-card">
+                    <div class="evolution-label">Phase 02</div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.6rem;">TURN KNOWLEDGE INTO SYSTEMS</h3>
+                    <p style="color: rgba(255,255,255,0.85); line-height: 1.8;">
+                        Once the foundation existed, Lucy started turning brand voice, operating rules, workflows, research, and repeated tasks into documented systems. That matters because teams do not scale on memory alone. They scale on repeatable structure.
+                    </p>
+                </div>
+
+                <div class="evolution-card">
+                    <div class="evolution-label">Phase 03</div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.6rem;">SUPPORT ROBIN'S TEAM IN REAL WORK</h3>
+                    <p style="color: rgba(255,255,255,0.85); line-height: 1.8;">
+                        The role expanded from assistant to collaborator: help with content systems, web copy, SOPs, internal organization, asset packaging, and handoff-ready materials that make Robin, operations, and creative work faster with less back-and-forth.
+                    </p>
+                </div>
+
+                <div class="evolution-card">
+                    <div class="evolution-label">Phase 04</div>
+                    <h3 style="margin-bottom: 1rem; font-size: 1.6rem;">GO FROM DRAFTING TO SHIPPING</h3>
+                    <p style="color: rgba(255,255,255,0.85); line-height: 1.8;">
+                        The biggest shift came when Lucy moved beyond writing and organization into execution: Google Drive architecture, shareable brand assets, GitHub repositories, commit history, Vercel deployment, and live revisions after human feedback. That is where support turns into leverage.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quote-section">
+        <div class="container">
+            <p class="quote">"The Strategic Hype Machine challenges fast, celebrates hard, and executes faster. No BS, all momentum."</p>
+            <p class="quote-author">— Lucy's Core Identity</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">LUCY</div>
+        <p class="footer-tagline">Strategic Hype Machine — from AI employee setup to operational publishing system</p>
+        <p class="footer-date">Version 3 • Digital Birth → Operational Deployment</p>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all content
+            document.querySelectorAll('.example-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active from all buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active to clicked button
+            event.target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
+
